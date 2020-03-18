@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ARConsistency.ResponseModels.Base;
+using System.Collections.Generic;
 using System.Linq;
-using ARConsistency.ResponseModels.Consistent;
 
 namespace ARConsistency.ResponseModels
 {
@@ -12,7 +12,7 @@ namespace ARConsistency.ResponseModels
         public bool IsModelValidatonError => ValidationErrors != null && ValidationErrors.Any();
         public IEnumerable<ValidationError> ValidationErrors { get; set; }
 
-        public ApiException() { }
+        internal ApiException() { }
 
         public ApiException(string message, int statusCode = 400)
             : base(message)

@@ -7,6 +7,7 @@ using ARConsistency.ResponseModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using TestApi.Models;
 
 namespace TestApi.Controllers
 {
@@ -39,13 +40,56 @@ namespace TestApi.Controllers
             .ToArray();
         }
 
+        #region ApiResponseResults
         [HttpGet]
-        [Route("TestApiResponse")]
-        public IActionResult TestApiResponse()
+        [Route("ApiResponseStringResult")]
+        public IActionResult ApiResponseStringResult()
         {
-
-            Ok()
-            return new ApiResponse("TestApiResponse method called and http status code set to 202 (Accepted).", StatusCodes.Status202Accepted);
+            return new ApiResponse("ApiResponseStringResult method called and http status code set to 202 (Accepted).", StatusCodes.Status202Accepted);
         }
+
+        [HttpGet]
+        [Route("ApiResponseArrayResult")]
+        public IActionResult ApiResponseArrayResult()
+        {
+            return new ApiResponse(Get(), StatusCodes.Status202Accepted);
+        }
+        #endregion
+
+        #region ApiErrorResults
+        [HttpGet]
+        [Route("ApiErrorStringResult")]
+        public IActionResult ApiErrorStringResult()
+        {
+            return new ApiError("ApiErrorStringResult method: test error message!");
+        }
+
+        [HttpGet]
+        [Route("ApiErrorValidationErrorResult")]
+        public IActionResult ApiErrorValidationErrorResult([FromBody]WeatherForecastRequest request)
+        {
+            if (!ModelState.IsValid)
+                return null;
+
+            return new ApiResponse(Get(), StatusCodes.Status202Accepted);
+        }
+        #endregion
+
+        #region ApiExceptionResults
+        [HttpGet]
+        [Route("UnHandledExceptionResult")]
+        public bool UnHandledExceptionResult()
+        {
+            throw new DivideByZeroException("test");
+        }
+
+        [HttpGet]
+        [Route("ThrowApiException")]
+        public bool ThrowApiException()
+        {
+            throw new ApiException("ThrowApiException method called!");
+        }
+    
+        #endregion
     }
 }

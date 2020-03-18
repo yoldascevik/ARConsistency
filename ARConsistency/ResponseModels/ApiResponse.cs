@@ -1,32 +1,33 @@
-﻿using ARConsistency.ResponseModels.Consistent;
+﻿using ARConsistency.ResponseModels.Base;
 using Newtonsoft.Json;
 
 namespace ARConsistency.ResponseModels
 {
-    public class ApiResponse : IConsistentable
+    public class ApiResponse : ArcObjectResult, IConsistentable
     {
         public string Version { get; set; }
-        public int StatusCode { get; set; }
         public string Message { get; set; }
 
         [JsonProperty(ItemTypeNameHandling = TypeNameHandling.None, TypeNameHandling = TypeNameHandling.None)]
         public object Result { get; set; }
 
+        internal ApiResponse() { }
+
+        public ApiResponse(object result, int statusCode = 200)
+            : this()
+        {
+            StatusCode = statusCode;
+            Result = result;
+        }
+
         public ApiResponse(string message, object result = null, int statusCode = 200, string apiVersion = "1.0.0.0")
+            : this(message, statusCode)
         {
             StatusCode = statusCode;
             Message = message;
             Result = result;
             Version = apiVersion;
         }
-
-        public ApiResponse(object result, int statusCode = 200)
-        {
-            StatusCode = statusCode;
-            Result = result;
-        }
-
-        public ApiResponse() { }
 
         ConsistentApiResponse IConsistentable.GetConsistentApiResponse()
         {

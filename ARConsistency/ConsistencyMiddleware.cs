@@ -1,7 +1,7 @@
 ﻿using ARConsistency.Extensions;
 using ARConsistency.Helpers;
 using ARConsistency.ResponseModels;
-using ARConsistency.ResponseModels.Consistent;
+using ARConsistency.ResponseModels.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -90,7 +90,7 @@ namespace ARConsistency
             _responseHelper.FormatResponseAccordingToOptions(ref response, httpStatusCode);
 
             string serializedResponse = JsonHelper.ConvertResponseToJsonString(response, _options);
-            await _responseHelper.WriteFormattedResponseToHttpContextAsync(context, httpStatusCode, serializedResponse);
+            await _responseHelper.WriteFormattedResponseToHttpContextAsync(context, response.StatusCode ?? httpStatusCode, serializedResponse);
         }
 
         private async Task HandleExceptionAsync(HttpContext context, ApiException exception)

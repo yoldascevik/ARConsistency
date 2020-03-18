@@ -1,8 +1,8 @@
-﻿using System.IO;
+﻿using ARConsistency.ResponseModels.Base;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using ARConsistency.ResponseModels.Consistent;
-using Microsoft.AspNetCore.Http;
 
 namespace ARConsistency.Helpers
 {
@@ -19,7 +19,7 @@ namespace ARConsistency.Helpers
             if (statusCode != StatusCodes.Status200OK && string.IsNullOrEmpty(response.Message))
                 response.Message = ResponseMessage.GetResponseMessageByStatusCode(statusCode);
 
-            response.Version ??= !_options.ShowApiVersion ? null : _options.ApiVersion;;
+            response.Version ??= !_options.ShowApiVersion ? null : _options.ApiVersion; 
             response.StatusCode = _options.ShowStatusCode ? statusCode : default;
             response.ExceptionDetails = _options.IsDebug ? response.ExceptionDetails : null;
         }

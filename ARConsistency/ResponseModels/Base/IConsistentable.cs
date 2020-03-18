@@ -1,4 +1,6 @@
-﻿namespace ARConsistency.ResponseModels.Consistent
+﻿using ARConsistency.ResponseModels.Base;
+
+namespace ARConsistency.ResponseModels.Base
 {
     internal interface IConsistentable
     {

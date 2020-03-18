@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 
-namespace ARConsistency.ResponseModels.Consistent
+namespace ARConsistency.ResponseModels.Base
 {
     public class ConsistentApiResponse
     {
