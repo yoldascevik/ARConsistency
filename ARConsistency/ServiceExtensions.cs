@@ -7,20 +7,21 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace ARConsistency
 {
     public static class ServiceExtensions
     {
-        public static IMvcBuilder AddApiResponseConsistency(this IMvcBuilder builder)
+        public static IMvcBuilder AddApiResponseConsistency(this IMvcBuilder builder, Action<ResponseOptions> responseOptionsBuilder)
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
 
             IServiceCollection services = builder.Services;
 
-            ConfigureResponseOptions(services);
+            ConfigureResponseOptions(services, responseOptionsBuilder);
             SuppressBadRequestResponse(services);
             SetApiResponseTypeNameHandler(builder);
 
@@ -36,13 +37,12 @@ namespace ARConsistency
         }
 
         #region Private Helper Methods
-        private static void ConfigureResponseOptions(IServiceCollection services)
+        private static void ConfigureResponseOptions(IServiceCollection services,  Action<ResponseOptions> responseOptionsBuilder)
         {
-            using (ServiceProvider serviceProvider = services.BuildServiceProvider())
-            {
-                IConfiguration configuration = serviceProvider.GetService<IConfiguration>();
-                services.Configure<ResponseOptions>(configuration.GetSection("ApiConsistency"));
-            }
+            ResponseOptions options = new ResponseOptions();
+            responseOptionsBuilder.Invoke(options);
+
+            services.AddSingleton(options);
         }
 
         private static void SuppressBadRequestResponse(IServiceCollection services)

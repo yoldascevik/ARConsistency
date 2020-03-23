@@ -22,12 +22,12 @@ namespace ARConsistency
 
         public ConsistencyMiddleware(
             RequestDelegate next,
-            IOptions<ResponseOptions> options,
+            ResponseOptions options,
             ILogger<ConsistencyMiddleware> logger)
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _options = options.Value ?? throw new ArgumentNullException(nameof(options));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
             _responseHelper = new ResponseHelper(_options);
         }
 
