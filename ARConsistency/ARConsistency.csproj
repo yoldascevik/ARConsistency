@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>Yoldaş Çevik</Authors>
+    <Description>Api Response Consistency For .Net Core Web Api</Description>
+    <RepositoryUrl>https://github.com/yoldascevik/ARConsistency</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

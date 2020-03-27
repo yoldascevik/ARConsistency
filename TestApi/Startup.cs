@@ -25,19 +25,8 @@ namespace TestApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddApiResponseConsistency(x =>
-                    {
-                        var config = new ResponseOptions();
-                        Configuration.GetSection("ApiConsistency").Bind(config);
-
-                        x.ApiVersion = config.ApiVersion;
-                        x.ShowApiVersion = config.ShowApiVersion;
-                        x.EnableExceptionLogging = config.EnableExceptionLogging;
-                        x.IgnoreNullValue = config.IgnoreNullValue;
-                        x.IsDebug = config.IsDebug;
-                        x.ShowStatusCode = config.ShowStatusCode;
-                        x.UseCamelCaseNaming = config.UseCamelCaseNaming;
-                    });
+            services.AddControllers()
+                .AddApiResponseConsistency(config => Configuration.GetSection("ApiConsistency").Bind(config) );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
