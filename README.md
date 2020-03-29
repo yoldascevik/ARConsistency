@@ -3,7 +3,6 @@
 # ARConsistency
 
 ![Nuget](https://img.shields.io/nuget/v/arconsistency)
-![GitHub package.json version](https://img.shields.io/github/package-json/v/yoldascevik/ARConsistency)
 ![GitHub](https://img.shields.io/github/license/yoldascevik/ARConsistency)
 
 ARConsistency maintains response consistency by ensuring that all responses sent to the client for .Net Core Web Api projects are forwarded with the same template.
