@@ -2,6 +2,10 @@
 
 # ARConsistency
 
+![Nuget](https://img.shields.io/nuget/v/arconsistency)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/yoldascevik/ARConsistency)
+![GitHub](https://img.shields.io/github/license/yoldascevik/ARConsistency)
+
 ARConsistency .Net Core Web Api projeleri için istemciye gönderilen tüm yanıtların aynı şablon ile iletilmesini sağlayarak yanıt tutarlılığını korur. 
 
 
