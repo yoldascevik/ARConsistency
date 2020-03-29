@@ -2,6 +2,7 @@
 
 # ARConsistency
 
+![.NET Core](https://github.com/yoldascevik/ARConsistency/workflows/.NET%20Core/badge.svg?branch=master)
 ![Nuget](https://img.shields.io/nuget/v/arconsistency)
 ![GitHub](https://img.shields.io/github/license/yoldascevik/ARConsistency)
 
