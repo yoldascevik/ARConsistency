@@ -5,6 +5,9 @@
     <Authors>Yoldaş Çevik</Authors>
     <Description>Api Response Consistency For .Net Core Web Api</Description>
     <RepositoryUrl>https://github.com/yoldascevik/ARConsistency</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/yoldascevik/ARConsistency</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +16,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="..\LICENSE.md" Pack="true" PackagePath="" visible="false" />
   </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ARConsistency", "ARConsiste
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{21BA718B-19C5-4132-9D85-DEE9EF0008DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApi", "TestApi\TestApi.csproj", "{B14E41B0-D278-44ED-9F82-7227EC131006}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApi", "TestApi\TestApi.csproj", "{B14E41B0-D278-44ED-9F82-7227EC131006}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
