@@ -19,7 +19,7 @@ namespace ARConsistency.Helpers
             if (statusCode != StatusCodes.Status200OK && string.IsNullOrEmpty(response.Message))
                 response.Message = ResponseMessage.GetResponseMessageByStatusCode(statusCode);
 
-            response.Version ??= !_options.ShowApiVersion ? null : _options.ApiVersion; 
+            response.Version = !_options.ShowApiVersion ? null : response.Version ?? _options.ApiVersion; 
             response.StatusCode = _options.ShowStatusCode ? statusCode : default;
             response.ExceptionDetails = _options.IsDebug ? response.ExceptionDetails : null;
         }
