@@ -64,28 +64,32 @@ namespace ARConsistency
 
         private async Task HandleRequestAsync(HttpContext context, string body)
         {
-            int httpStatusCode = context.Response.StatusCode;
-            if (string.IsNullOrEmpty(body) || httpStatusCode == StatusCodes.Status304NotModified)
-                return;
-
-            string bodyText = !body.IsValidJson() ? JsonHelper.ConvertToJsonString(body) : body;
-
-            JToken deserializedResponse = JsonConvert.DeserializeObject<JToken>(bodyText);
-
             ConsistentApiResponse response = null;
-            if (deserializedResponse is JObject responseObj)
+            int httpStatusCode = context.Response.StatusCode;
+            
+            if (!string.IsNullOrEmpty(body))
             {
-                Type type = responseObj["$type"]?.ToObject<Type>();
+                string bodyText = !body.IsValidJson() ? JsonHelper.ConvertToJsonString(body) : body;
+                JToken deserializedResponse = JsonConvert.DeserializeObject<JToken>(bodyText);
 
-                if (type != null && typeof(IConsistentable).IsAssignableFrom(type))
+                if (deserializedResponse is JObject responseObj)
                 {
-                    response = deserializedResponse.ToObject(type)
-                        .As<IConsistentable>()
-                        .GetConsistentApiResponse();
-                }
-            }
+                    Type type = responseObj["$type"]?.ToObject<Type>();
 
-            response ??= JsonHelper.GetConsistentApiResponseFromJsonToken(deserializedResponse);
+                    if (type != null && typeof(IConsistentable).IsAssignableFrom(type))
+                    {
+                        response = deserializedResponse.ToObject(type)
+                            .As<IConsistentable>()
+                            .GetConsistentApiResponse();
+                    }
+                }
+
+                response ??= JsonHelper.GetConsistentApiResponseFromJsonToken(deserializedResponse);
+            }
+            else
+            {
+                response = new ConsistentApiResponse();
+            }
 
             _responseHelper.FormatResponseAccordingToOptions(ref response, httpStatusCode);
 
@@ -101,7 +105,8 @@ namespace ARConsistency
             _responseHelper.FormatResponseAccordingToOptions(ref response, exception.StatusCode);
 
             string serializedResponse = JsonHelper.ConvertResponseToJsonString(response, _options);
-            await _responseHelper.WriteFormattedResponseToHttpContextAsync(context, exception.StatusCode, serializedResponse);
+            await _responseHelper.WriteFormattedResponseToHttpContextAsync(context, exception.StatusCode,
+                serializedResponse);
         }
     }
 }

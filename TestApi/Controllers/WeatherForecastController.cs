@@ -39,7 +39,7 @@ namespace TestApi.Controllers
             })
             .ToArray();
         }
-
+        
         #region ApiResponseResults
         [HttpGet]
         [Route("ApiResponseStringResult")]
@@ -91,5 +91,21 @@ namespace TestApi.Controllers
         }
     
         #endregion
+        
+        #region Void & Task Actions
+
+        // POST api/WeatherForecast/TestVoid
+        [HttpPost("TestVoid")]
+        public void TestVoid() { }
+
+        // POST api/WeatherForecast/TestTaskAsync
+        [HttpPost("TestTaskAsync")]
+        public async Task TestTaskAsync()
+        {
+            await Task.CompletedTask;
+        }
+
+        #endregion
+
     }
 }
