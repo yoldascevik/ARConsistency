@@ -5,9 +5,7 @@ using ARConsistency.Helpers;
 using ARConsistency.ResponseModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace ARConsistency
@@ -33,7 +31,7 @@ namespace ARConsistency
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
 
-            return builder.UseMiddleware<ConsistencyMiddleware>(); ;
+            return builder.UseMiddleware<ConsistencyMiddleware>();
         }
 
         #region Private Helper Methods

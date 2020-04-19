@@ -6,7 +6,7 @@ namespace ARConsistency.ResponseModels
 {
     public class ApiException : System.Exception, IConsistentable
     {
-        public string Version { get; }
+        public string Version { get; set; }
         public int StatusCode { get; set; }
         public override string StackTrace { get; }
         public bool IsModelValidatonError => ValidationErrors != null && ValidationErrors.Any();
