@@ -8,6 +8,7 @@
     <PackageProjectUrl>https://github.com/yoldascevik/ARConsistency</PackageProjectUrl>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <Version>1.0.2</Version>
+    <PackageVersion>1.0.3</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
