@@ -13,7 +13,7 @@ namespace ARConsistency.Extensions
             {
                 try
                 {
-                    object obj = JsonDocument.Parse(text);
+                    JsonDocument.Parse(text);
                     return true;
                 }
                 catch (Exception)

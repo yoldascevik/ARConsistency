@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using ARConsistency.ResponseModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using TestApi.Models;
 
 namespace TestApi.Controllers
@@ -19,13 +17,6 @@ namespace TestApi.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
@@ -64,7 +55,7 @@ namespace TestApi.Controllers
             return new ApiError("ApiErrorStringResult method: test error message!");
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("ApiErrorValidationErrorResult")]
         public IActionResult ApiErrorValidationErrorResult([FromBody]WeatherForecastRequest request)
         {
