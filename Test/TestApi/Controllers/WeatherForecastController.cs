@@ -31,6 +31,13 @@ namespace TestApi.Controllers
             .ToArray();
         }
         
+        [HttpGet]
+        [Route("BySummary/{summary}")]
+        public IActionResult GetBySummary(string summary)
+        {
+            return Ok(Get().FirstOrDefault(x=> x.Summary == summary));
+        }
+        
         #region ApiResponseResults
         [HttpGet]
         [Route("ApiResponseStringResult")]

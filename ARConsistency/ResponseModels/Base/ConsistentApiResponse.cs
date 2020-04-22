@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace ARConsistency.ResponseModels.Base
 {
@@ -13,11 +14,12 @@ namespace ARConsistency.ResponseModels.Base
         public string ExceptionMessage { get; set; }
         public string ExceptionDetails { get; set; }
         public IEnumerable<ValidationError> ValidationErrors { get; set; }
+ 
+        [JsonProperty(NullValueHandling =  NullValueHandling.Include)]
         public object Payload { get; set; }
 
         public ConsistentApiResponse()
         {
-          
         }
 
         public ConsistentApiResponse(object payload)

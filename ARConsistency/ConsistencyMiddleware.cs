@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ARConsistency
@@ -64,7 +65,9 @@ namespace ARConsistency
         private async Task HandleRequestAsync(HttpContext context, string body)
         {
             ConsistentApiResponse response = null;
-            int httpStatusCode = context.Response.StatusCode;
+            int httpStatusCode = context.Response.StatusCode == StatusCodes.Status204NoContent
+                ? StatusCodes.Status200OK
+                : context.Response.StatusCode;
             
             if (!string.IsNullOrEmpty(body))
             {

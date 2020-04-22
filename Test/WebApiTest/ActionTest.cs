@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using ARConsistency.ResponseModels.Base;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Newtonsoft.Json;
 using TestApi.Models;
 using WebApiTest.Helpers;
@@ -45,6 +46,20 @@ namespace WebApiTest
             Assert.Equal(200, consistentApiResponse.StatusCode);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.False(consistentApiResponse.IsError);
+        }
+
+        [Fact]
+        public async void GetBySummary_Should_200Ok_IsErrorFalse_PayloadIsNull_WithNotExistSummary()
+        {
+            // Act
+            var response = await _client.GetAsync("/api/WeatherForecast/BySummary/VeryHot");
+            var consistentApiResponse = await TestHelper.DeserializeResponseData<ConsistentApiResponse>(response);
+            
+            // Assert
+            Assert.Equal(200, consistentApiResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.False(consistentApiResponse.IsError);
+            Assert.Null(consistentApiResponse.Payload);
         }
     }
 }
