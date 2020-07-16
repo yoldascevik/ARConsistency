@@ -1,4 +1,4 @@
-﻿namespace ARConsistency
+﻿namespace ARConsistency.Configuration
 {
     public class ResponseOptions
     {

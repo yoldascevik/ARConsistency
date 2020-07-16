@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ARConsistency.ResponseModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TestApi.Exceptions;
 using TestApi.Models;
 
 namespace TestApi.Controllers
@@ -79,6 +80,13 @@ namespace TestApi.Controllers
         public bool UnHandledExceptionResult()
         {
             throw new DivideByZeroException("test");
+        }
+        
+        [HttpGet]
+        [Route("ItemNotFoundException")]
+        public bool ItemNotFoundException()
+        {
+            throw new ItemNotFoundException("ItemNotFoundException method called!");
         }
 
         [HttpGet]

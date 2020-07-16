@@ -1,9 +1,11 @@
 using ARConsistency;
+using ARConsistency.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TestApi.Exceptions;
 
 namespace TestApi
 {
@@ -20,7 +22,11 @@ namespace TestApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
-                .AddApiResponseConsistency(config => Configuration.GetSection("ApiConsistency").Bind(config) );
+                .AddApiResponseConsistency(options =>
+                {
+                    Configuration.GetSection("ApiConsistency").Bind(options.ResponseOptions);
+                    options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type => type.StatusCode);
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

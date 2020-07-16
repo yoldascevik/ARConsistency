@@ -8,8 +8,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
-using System.Net;
 using System.Threading.Tasks;
+using ARConsistency.Configuration;
 
 namespace ARConsistency
 {
@@ -19,15 +19,19 @@ namespace ARConsistency
         private readonly ResponseOptions _options;
         private readonly ResponseHelper _responseHelper;
         private readonly ILogger<ConsistencyMiddleware> _logger;
+        private readonly ExceptionStatusCodeHandler _exceptionStatusCodeHandler;
 
         public ConsistencyMiddleware(
             RequestDelegate next,
             ResponseOptions options,
-            ILogger<ConsistencyMiddleware> logger)
+            ILogger<ConsistencyMiddleware> logger, 
+            ExceptionStatusCodeHandler exceptionStatusCodeHandler)
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _exceptionStatusCodeHandler = exceptionStatusCodeHandler;
             _options = options ?? throw new ArgumentNullException(nameof(options));
+            _exceptionStatusCodeHandler = exceptionStatusCodeHandler ?? throw new ArgumentNullException(nameof(exceptionStatusCodeHandler));
             _responseHelper = new ResponseHelper(_options);
         }
 
@@ -57,7 +61,10 @@ namespace ARConsistency
                     context.Response.Body = originalResponseBodyStream;
                     if (!_options.EnableExceptionLogging) throw;
 
-                    await HandleExceptionAsync(context, new ApiException(ex));
+                    var apiException = new ApiException(ex);
+                    apiException.StatusCode = _exceptionStatusCodeHandler.GetStatusCodeFromException(ex) ?? apiException.StatusCode;
+                    
+                    await HandleExceptionAsync(context, apiException);
                 }
             }
         }
