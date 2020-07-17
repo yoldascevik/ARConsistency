@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using ARConsistency.Configuration;
 using ARConsistency.ContractResolver;
 using ARConsistency.Helpers;
 using ARConsistency.ResponseModels;
@@ -12,14 +13,18 @@ namespace ARConsistency
 {
     public static class ServiceExtensions
     {
-        public static IMvcBuilder AddApiResponseConsistency(this IMvcBuilder builder, Action<ResponseOptions> responseOptionsBuilder)
+        public static IMvcBuilder AddApiResponseConsistency(this IMvcBuilder builder, 
+            Action<ArcConfiguration> configurationBuilder)
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
+            
+            if (configurationBuilder == null)
+                throw new ArgumentNullException(nameof(configurationBuilder));
 
             IServiceCollection services = builder.Services;
-
-            ConfigureResponseOptions(services, responseOptionsBuilder);
+            
+            Configure(services, configurationBuilder);
             SuppressBadRequestResponse(services);
             SetApiResponseTypeNameHandler(builder);
 
@@ -35,14 +40,15 @@ namespace ARConsistency
         }
 
         #region Private Helper Methods
-        private static void ConfigureResponseOptions(IServiceCollection services,  Action<ResponseOptions> responseOptionsBuilder)
+        private static void Configure(IServiceCollection services,  Action<ArcConfiguration> configurationBuilder)
         {
-            ResponseOptions options = new ResponseOptions();
-            responseOptionsBuilder.Invoke(options);
-
-            services.AddSingleton(options);
+            ArcConfiguration configuration = new ArcConfiguration();
+            
+            configurationBuilder.Invoke(configuration);
+            services.AddSingleton(configuration.ResponseOptions);
+            services.AddSingleton(configuration.ExceptionStatusCodeHandler);
         }
-
+        
         private static void SuppressBadRequestResponse(IServiceCollection services)
         {
             services.Configure<ApiBehaviorOptions>(options =>

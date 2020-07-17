@@ -48,7 +48,10 @@ public void ConfigureServices(IServiceCollection services)
 {
   // ...
   services.AddControllers()
-          .AddApiResponseConsistency(config => Configuration.GetSection("ApiConsistency").Bind(config) );
+      .AddApiResponseConsistency(options =>
+      {
+          Configuration.GetSection("ApiConsistency").Bind(options.ResponseOptions);
+      });
 }
 ```
 ```csharp
@@ -114,7 +117,47 @@ ApiException	| 500 (Internal Server Error)	| Hata fırlatır ve geçerli yordam�
 
 > Yukarıdaki tabloda bulunan HTTP Status Code' lar varsayılan değerlerdir ve kullanım sırasında değiştirilebilir.
 
-## Loglama
+## Hata Yakalama
+
+ARConsistency ile **ApiException** yanıt tipini kullanarak bir hatanın belirlemiş olduğunuz HTTP durum koduyla birlikte dönmesini sağlayabilirsiniz.  
+
+**ApiException** dışında yakalanan tüm hata türleri **ApiException**'a çevrilerek serialize edilir ve 500 (**Internal Server Exception**) HTTP durum koduyla istemciye döndürülür.
+> Tüm hata türlerini desteklemek için **EnableExceptionLogging** ayarının açık olması gerekmektedir. (bkz:Hata Loglama)
+
+Özel hata tiplerinde 500 yerine farklı bir durum kodu dönmek için **ExceptionStatusCodeHandler** kullanabilirsiniz.  
+
+Bunun için "*Startup.cs*" içerisinde **ExceptionStatusCodeHandler** tanımlamasını yapın.
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+  // ...
+  services.AddControllers()
+      .AddApiResponseConsistency(options =>
+      {
+          // diğer ayarlar... (bkz:Startup İmplementasyon)
+          options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type => type.StatusCode);
+      });
+}
+```
+> **IStatusCodedException** Interface' i int türünde bir status code özelliği içermelidir ve bu interface i uygulayan sınıflar System.Exception sınıfından türemelidir. (Interface ve status code property isimleri serbest şekilde belirlenebilir)
+
+#### Örnek:
+
+```csharp
+public class ItemNotFoundException: Exception, IStatusCodedException
+{
+    public ItemNotFoundException(string message)
+        : base(message)
+    {
+    }
+
+    public int StatusCode => 400;
+}
+```
+
+**ItemNotFoundException** hatası fırlatıldığında ARConsistency bu hatayı ApiException a dönüştürerek hata sınıfı içinde belirtilen 400 durum kodunu dönecektir.
+
+## Hata Loglama
 
 ARConsistency, ILogger arayüzü ile yakaladığı hataları loglama kabiliyetine sahiptir. Bu ayar (**EnableExceptionLogging**) siz değiştirmediğiniz sürece varsayılan olarak aktiftir.
 
