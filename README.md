@@ -47,7 +47,10 @@ public void ConfigureServices(IServiceCollection services)
 {
   // ...
   services.AddControllers()
-          .AddApiResponseConsistency(config => Configuration.GetSection("ApiConsistency").Bind(config) );
+      .AddApiResponseConsistency(options =>
+      {
+          Configuration.GetSection("ApiConsistency").Bind(options.ResponseOptions);
+      });
 }
 ```
 ```csharp
@@ -111,9 +114,48 @@ ApiException	  | 500 (Internal Server Error)	| Throws errors and terminates the 
 
 > In addition to these response types, ARConsistency also supports basic web api return types such as **Ok()**, **BadRequest()**. But **Ok()** return type contains only the data **ApiResponse** can contain information such as Message in addition to the returned data.
 
-> The HTTP Status Codes in the table above are default values and can be changed during use.
+> The HTTP Status Codes in the table above are default values and can be changed during use.  
 
-## Logging
+## Exception Handler
+ 
+With the ARConsistency, you can use the **ApiException** response type to return an error with the HTTP status code you set.  
+
+All types of exceptions handled except **ApiException** are converted to **ApiException** and returned to the client with 500 (**Internal Server Exception**) HTTP status code.
+> The **Enable Exception Logging** setting must be turned on to support all types of exception. (see:Error Logging)
+
+In custom exception types, you can use **ExceptionStatusCodeHandler** to return a different status code instead of 500.  
+
+To do so, define **ExceptionStatusCodeHandler** in "*Startup.cs*".
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+  // ...
+  services.AddControllers()
+      .AddApiResponseConsistency(options =>
+      {
+          // other options... (see:Startup Implemantation)
+          options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type => type.StatusCode);
+      });
+}
+```
+> **IStatusCodedException** Interface must contain a status code property of type int, and the classes implementing this interface must derive from the System.Exception class. (Interface and status code property names can be freely determined)
+#### Sample:
+
+```csharp
+public class ItemNotFoundException: Exception, IStatusCodedException
+{
+    public ItemNotFoundException(string message)
+        : base(message)
+    {
+    }
+
+    public int StatusCode => 400;
+}
+```
+
+When the **ItemNotFoundException** exception is thrown, ARConsistency will convert this exception to ApiException and return the 400 status code specified in the error class.
+
+## Exception Logging
 
 ARConsistency has the ability to log errors it captures with the ILogger interface. This setting (**EnableExceptionLogging**) is enabled by default unless you change it.
 
@@ -121,6 +163,20 @@ While this setting is on, errors occurring in the pipeline are transmitted to th
 
 When logging is turned off, error messages captured are thrown without processing.
 
+#### Handle Status Code From Exception
+Add the following into "*Startup.cs*".
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+  // ...
+  services.AddControllers()
+      .AddApiResponseConsistency(options =>
+      {
+          Configuration.GetSection("ApiConsistency").Bind(options.ResponseOptions);
+          options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type => type.StatusCode);
+      });
+}
+```
 ## Test Api Documentation
 
 There is a .Net Core Web Api project in the repository where you can test the project. 

@@ -29,7 +29,6 @@ namespace ARConsistency
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _exceptionStatusCodeHandler = exceptionStatusCodeHandler;
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _exceptionStatusCodeHandler = exceptionStatusCodeHandler ?? throw new ArgumentNullException(nameof(exceptionStatusCodeHandler));
             _responseHelper = new ResponseHelper(_options);
