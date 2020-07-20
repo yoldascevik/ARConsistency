@@ -163,20 +163,6 @@ While this setting is on, errors occurring in the pipeline are transmitted to th
 
 When logging is turned off, error messages captured are thrown without processing.
 
-#### Handle Status Code From Exception
-Add the following into "*Startup.cs*".
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-  // ...
-  services.AddControllers()
-      .AddApiResponseConsistency(options =>
-      {
-          Configuration.GetSection("ApiConsistency").Bind(options.ResponseOptions);
-          options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type => type.StatusCode);
-      });
-}
-```
 ## Test Api Documentation
 
 There is a .Net Core Web Api project in the repository where you can test the project. 
