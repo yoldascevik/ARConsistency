@@ -108,13 +108,11 @@ namespace ARConsistency
         private async Task HandleExceptionAsync(HttpContext context, ApiException exception)
         {
             ConsistentApiResponse response = exception.As<IConsistentable>().GetConsistentApiResponse();
-
-            _logger.LogError(exception, null);
             _responseHelper.FormatResponseAccordingToOptions(ref response, exception.StatusCode);
-
+            _logger.LogError(exception, ResponseMessage.GetResponseMessageByStatusCode(response.StatusCode));
+            
             string serializedResponse = JsonHelper.ConvertResponseToJsonString(response, _options);
-            await _responseHelper.WriteFormattedResponseToHttpContextAsync(context, exception.StatusCode,
-                serializedResponse);
+            await _responseHelper.WriteFormattedResponseToHttpContextAsync(context, exception.StatusCode, serializedResponse);
         }
     }
 }

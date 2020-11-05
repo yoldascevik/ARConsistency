@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ARConsistency.Configuration;
 using ARConsistency.ContractResolver;
@@ -11,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace ARConsistency
 {
-    public static class ServiceExtensions
+    public static class ServiceCollectionExtension
     {
         public static IMvcBuilder AddApiResponseConsistency(this IMvcBuilder builder, 
             Action<ArcConfiguration> configurationBuilder)
@@ -42,8 +43,7 @@ namespace ARConsistency
         #region Private Helper Methods
         private static void Configure(IServiceCollection services,  Action<ArcConfiguration> configurationBuilder)
         {
-            ArcConfiguration configuration = new ArcConfiguration();
-            
+            var configuration = new ArcConfiguration();
             configurationBuilder.Invoke(configuration);
             services.AddSingleton(configuration.ResponseOptions);
             services.AddSingleton(configuration.ExceptionStatusCodeHandler);
@@ -55,7 +55,7 @@ namespace ARConsistency
             {
                 options.InvalidModelStateResponseFactory = context =>
                 {
-                    var validationErrors = context.ModelState.Keys
+                    List<ValidationError> validationErrors = context.ModelState.Keys
                         .SelectMany(key => context.ModelState[key].Errors.Select(x => new ValidationError(key, x.ErrorMessage)))
                         .ToList();
 
