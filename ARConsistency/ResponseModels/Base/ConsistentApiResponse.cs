@@ -12,15 +12,13 @@ namespace ARConsistency.ResponseModels.Base
         public string Message { get; set; }
         public bool IsError => !string.IsNullOrEmpty(ExceptionMessage) || (ValidationErrors != null && ValidationErrors.Any());
         public string ExceptionMessage { get; set; }
-        public string ExceptionDetails { get; set; }
+        public string ExceptionDetails { get; set; } 
         public IEnumerable<ValidationError> ValidationErrors { get; set; }
- 
+        
         [JsonProperty(NullValueHandling =  NullValueHandling.Include)]
         public object Payload { get; set; }
 
-        public ConsistentApiResponse()
-        {
-        }
+        public ConsistentApiResponse() { }
 
         public ConsistentApiResponse(object payload)
             :this()

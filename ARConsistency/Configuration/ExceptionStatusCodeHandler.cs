@@ -19,7 +19,7 @@ namespace ARConsistency.Configuration
             if (!(statusCodeExpression.Body is MemberExpression memberExpression))
                 throw new ArgumentException("Unable to resolve StatusCode member in expression.");
 
-            var memberType = memberExpression.Member.MemberType;
+            MemberTypes memberType = memberExpression.Member.MemberType;
             if (memberType != MemberTypes.Field && memberType != MemberTypes.Property)
                 throw new ArgumentException("StatusCode expression can be only Property or Field member.");
 

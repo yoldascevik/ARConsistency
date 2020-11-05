@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using ARConsistency.ResponseModels.Base;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Newtonsoft.Json;
 using TestApi.Models;
 using WebApiTest.Helpers;

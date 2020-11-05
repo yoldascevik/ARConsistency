@@ -11,7 +11,7 @@ namespace ARConsistency.ResponseModels.Base
 
         public override Task ExecuteResultAsync(ActionContext context)
         {
-            IActionResultExecutor<ObjectResult> executor = context.HttpContext.RequestServices.GetRequiredService<IActionResultExecutor<ObjectResult>>();
+            var executor = context.HttpContext.RequestServices.GetRequiredService<IActionResultExecutor<ObjectResult>>();
 
             context.HttpContext.Response.StatusCode = StatusCode;
             return executor.ExecuteAsync(context, new ObjectResult(this));

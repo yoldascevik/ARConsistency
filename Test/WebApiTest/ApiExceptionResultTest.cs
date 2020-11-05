@@ -21,7 +21,7 @@ namespace WebApiTest
         {
             // Arrange
             var expectedExceptionMessage = "test";
-            var expectedMessage = "Unhandled Exception occurred. Unable to process the request.";
+            var expectedMessage = "An unhandled exception was thrown by the application.";
 
             // Act
             var response = await _client.GetAsync("/api/WeatherForecast/UnHandledExceptionResult");

@@ -10,8 +10,8 @@ namespace ARConsistency.Helpers
 {
     internal static class JsonHelper
     {
-        internal static string ConvertToJsonString(object rawJSON)
-            => JsonConvert.SerializeObject(rawJSON);
+        internal static string ConvertToJsonString(object rawJson)
+            => JsonConvert.SerializeObject(rawJson);
 
         internal static string ConvertResponseToJsonString(ConsistentApiResponse response, ResponseOptions options)
             => JsonConvert.SerializeObject(response, Formatting.Indented, new JsonSerializerSettings()
@@ -25,6 +25,5 @@ namespace ARConsistency.Helpers
 
         internal static ConsistentApiResponse GetConsistentApiResponseFromJsonToken(JToken jsonToken)
             => new ConsistentApiResponse(jsonToken.ToObject<object>());
-
     }
 }
