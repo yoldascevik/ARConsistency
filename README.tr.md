@@ -169,3 +169,7 @@ Loglama kapalı olduğunda yakalanan hata mesajları işlenmeden fırlatılır.
 
 Repository içersinde projeyi test edebileceğiniz bir .Net Core Web Api projesi bulunmaktadır. 
 Test apisinin Postman dokümantasyonuna [buradan](https://documenter.getpostman.com/view/1473309/SzS5vS8p) ulaşabilirsiniz.
+
+## Katkı Sağlama
+
+Katkıda bulunmak için lütfen [CONTRIBUTING.md](https://github.com/yoldascevik/ARConsistency/blob/master/CONTRIBUTING.md) dosyasına göz atın.

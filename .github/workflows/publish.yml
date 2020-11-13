@@ -1,0 +1,25 @@
+name: Push Nuget Package to Nuget.Org
+
+on:
+  workflow_run:
+    workflows: [".NET Core"]
+    branches: [ master ]
+    types:
+      - completed
+jobs:
+  publish:
+    name: publish nuget package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        
+      # Publish
+      - name: publish on version change
+        id: publish_nuget
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: ARConsistency/ARConsistency.csproj
+          PACKAGE_NAME: ARConsistency
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          TAG_COMMIT: true
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
