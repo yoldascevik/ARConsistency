@@ -167,3 +167,8 @@ When logging is turned off, error messages captured are thrown without processin
 
 There is a .Net Core Web Api project in the repository where you can test the project. 
 You can find the Postman documentation of the test api [here](https://documenter.getpostman.com/view/1473309/SzS5vS8p).
+
+## Contributing
+
+Please browse the [CONTRIBUTING.md](https://github.com/yoldascevik/ARConsistency/blob/master/CONTRIBUTING.md) file to contribute.
+
