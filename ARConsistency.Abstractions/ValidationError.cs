@@ -1,4 +1,4 @@
-﻿namespace ARConsistency.ResponseModels
+﻿namespace ARConsistency.Abstractions
 {
     public class ValidationError
     {

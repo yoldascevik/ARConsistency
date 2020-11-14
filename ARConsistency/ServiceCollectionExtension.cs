@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ARConsistency.Abstractions;
 using ARConsistency.Configuration;
 using ARConsistency.ContractResolver;
 using ARConsistency.Helpers;

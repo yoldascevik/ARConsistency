@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace ARConsistency.ResponseModels.Base
+namespace ARConsistency.Abstractions
 {
     public class ConsistentApiResponse
     {
@@ -30,7 +29,7 @@ namespace ARConsistency.ResponseModels.Base
         {
             ExceptionMessage = exceptionMessage;
             ValidationErrors = validationErrors;
-            StatusCode = StatusCodes.Status400BadRequest;
+            StatusCode = 400;
         }
     }
 }

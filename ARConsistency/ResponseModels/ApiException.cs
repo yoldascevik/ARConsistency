@@ -1,6 +1,6 @@
-﻿using ARConsistency.ResponseModels.Base;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using ARConsistency.Abstractions;
 
 namespace ARConsistency.ResponseModels
 {

@@ -1,6 +1,6 @@
 using System.Net;
 using System.Net.Http;
-using ARConsistency.ResponseModels.Base;
+using ARConsistency.Abstractions;
 using TestApi.Exceptions;
 using WebApiTest.Helpers;
 using Xunit;
