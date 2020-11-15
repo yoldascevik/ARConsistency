@@ -1,4 +1,4 @@
-name: Push Nuget Package to Nuget.Org
+name: Push Nuget Packages to Nuget.Org
 
 on:
   workflow_run:
@@ -8,13 +8,13 @@ on:
       - completed
 jobs:
   publish:
-    name: publish nuget package
+    name: publish nuget packages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         
-      # Publish
-      - name: publish on version change
+      # Publish ARConsistency
+      - name: publish on version change ARConsistency
         id: publish_nuget
         uses: rohith/publish-nuget@v2
         with:
@@ -23,3 +23,14 @@ jobs:
           VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
           TAG_COMMIT: true
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+		  
+	  # Publish ARConsistency.Abstractions
+	  - name: publish on version change ARConsistency.Abstractions
+		id: publish_nuget
+		uses: rohith/publish-nuget@v2
+		with:
+		  PROJECT_FILE_PATH: ARConsistency.Abstractions/ARConsistency.Abstractions.csproj
+		  PACKAGE_NAME: ARConsistency.Abstractions
+		  VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+		  TAG_COMMIT: false
+		  NUGET_KEY: ${{secrets.NUGET_API_KEY}}
