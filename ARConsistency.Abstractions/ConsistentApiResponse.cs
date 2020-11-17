@@ -1,11 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace ARConsistency.ResponseModels.Base
+namespace ARConsistency.Abstractions
 {
-    public class ConsistentApiResponse
+    public class ConsistentApiResponse: ConsistentApiResponse<object>
+    {
+        public ConsistentApiResponse() { }
+
+        public ConsistentApiResponse(object payload) :base(payload) { }
+
+        public ConsistentApiResponse(string exceptionMessage, IEnumerable<ValidationError> validationErrors)
+            : base(exceptionMessage, validationErrors) { }
+        
+    }    
+    
+    public class ConsistentApiResponse<TPayload>
     {
         public int? StatusCode { get; set; }
         public string Version { get; set; }
@@ -16,11 +26,11 @@ namespace ARConsistency.ResponseModels.Base
         public IEnumerable<ValidationError> ValidationErrors { get; set; }
         
         [JsonProperty(NullValueHandling =  NullValueHandling.Include)]
-        public object Payload { get; set; }
+        public TPayload Payload { get; set; }
 
         public ConsistentApiResponse() { }
 
-        public ConsistentApiResponse(object payload)
+        public ConsistentApiResponse(TPayload payload)
             :this()
         {
             Payload = payload;
@@ -30,7 +40,7 @@ namespace ARConsistency.ResponseModels.Base
         {
             ExceptionMessage = exceptionMessage;
             ValidationErrors = validationErrors;
-            StatusCode = StatusCodes.Status400BadRequest;
+            StatusCode = 400;
         }
     }
 }
