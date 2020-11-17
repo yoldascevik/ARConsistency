@@ -15,7 +15,7 @@ jobs:
         
       # Publish ARConsistency
       - name: publish on version change ARConsistency
-        id: publish_nuget
+        id: publish_nuget_arconsistency
         uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: ARConsistency/ARConsistency.csproj
@@ -26,7 +26,7 @@ jobs:
           
       # Publish ARConsistency.Abstractions
       - name: publish on version change ARConsistency.Abstractions
-        id: publish_nuget
+        id: publish_nuget_abstractions
         uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: ARConsistency.Abstractions/ARConsistency.Abstractions.csproj
