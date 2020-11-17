@@ -1,5 +1,6 @@
 ﻿using ARConsistency.ResponseModels.Base;
 using System.Collections.Generic;
+using ARConsistency.Abstractions;
 using Microsoft.AspNetCore.Http;
 
 namespace ARConsistency.ResponseModels

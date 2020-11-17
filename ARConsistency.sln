@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ARConsistency", "ARConsiste
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{21BA718B-19C5-4132-9D85-DEE9EF0008DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApi", "Test\TestApi\TestApi.csproj", "{D65FF6B3-4392-4C6B-A9B6-356E015F6448}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApi", "Test\TestApi\TestApi.csproj", "{D65FF6B3-4392-4C6B-A9B6-356E015F6448}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiTest", "Test\WebApiTest\WebApiTest.csproj", "{42753619-A46F-4F5F-BDE5-08995763F18A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiTest", "Test\WebApiTest\WebApiTest.csproj", "{42753619-A46F-4F5F-BDE5-08995763F18A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARConsistency.Abstractions", "ARConsistency.Abstractions\ARConsistency.Abstractions.csproj", "{8FC2D740-D7E9-4EB3-9F15-31D51011EF18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{42753619-A46F-4F5F-BDE5-08995763F18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42753619-A46F-4F5F-BDE5-08995763F18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42753619-A46F-4F5F-BDE5-08995763F18A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FC2D740-D7E9-4EB3-9F15-31D51011EF18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FC2D740-D7E9-4EB3-9F15-31D51011EF18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FC2D740-D7E9-4EB3-9F15-31D51011EF18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FC2D740-D7E9-4EB3-9F15-31D51011EF18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

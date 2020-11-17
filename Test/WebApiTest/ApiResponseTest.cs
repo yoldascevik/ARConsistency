@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using ARConsistency.ResponseModels.Base;
+using ARConsistency.Abstractions;
 using Newtonsoft.Json;
 using TestApi.Models;
 using WebApiTest.Helpers;

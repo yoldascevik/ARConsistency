@@ -1,4 +1,5 @@
-﻿using ARConsistency.ResponseModels.Base;
+﻿using ARConsistency.Abstractions;
+using ARConsistency.ResponseModels.Base;
 using Newtonsoft.Json;
 
 namespace ARConsistency.ResponseModels

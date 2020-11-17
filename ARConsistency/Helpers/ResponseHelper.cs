@@ -1,8 +1,8 @@
-﻿using ARConsistency.ResponseModels.Base;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using ARConsistency.Abstractions;
 using ARConsistency.Configuration;
 
 namespace ARConsistency.Helpers

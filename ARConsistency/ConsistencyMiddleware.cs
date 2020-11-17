@@ -1,7 +1,6 @@
 ﻿using ARConsistency.Extensions;
 using ARConsistency.Helpers;
 using ARConsistency.ResponseModels;
-using ARConsistency.ResponseModels.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -9,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using ARConsistency.Abstractions;
 using ARConsistency.Configuration;
 
 namespace ARConsistency
