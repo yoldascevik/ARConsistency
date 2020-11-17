@@ -165,6 +165,41 @@ Bu ayar açık iken pipeline de oluşan hatalar ILogger arayüzü ile loglama me
 
 Loglama kapalı olduğunda yakalanan hata mesajları işlenmeden fırlatılır.
 
+## İstemci Tarafında Kullanım
+
+ARConsistency kullanan bir Apiye .Net projenizden istekte bulunuyorsanız, size gelen serialize edilmiş yanıtı ARConsistency ana modeli ile deserialize etmeniz gerekir. Bunun için ARConsistency paketini istemci projenize referans etmenize gerek yoktur. Bunun yerine daha hafif olan ve yalnızca temel yanıt modelini içeren ***ARConsistency.Abstractions*** kütüphanesini kullanabilirsiniz. 
+
+ARConsistency tarafından dönen yanıtlar generic *ConsistentApiResponse<T>* sınıfı ile serialize edilmektedir. 
+
+##### 1. Nuget Paketini yüklemek
+
+```powershell
+PM> Install-Package ARConsistency.Abstractions
+```
+##### 2. Yanıtı Deserialize etmek
+
+```csharp
+public async Task<AstronautDto> GetIdByAsync(int id)
+{
+  // diğer kodlar...
+
+  var responseHttpMessage = await HttpClient.GetAsync(urlPath);
+  string resultContent = await responseHttpMessage.Content.ReadAsStringAsync();
+
+  var jsonSerializerOptions = new JsonSerializerOptions()
+  {
+      PropertyNameCaseInsensitive = true // ARConsistency ayarlarında UseCamelCaseNaming açık ise kullanın.
+  };
+
+  var response = JsonSerializer.Deserialize<ConsistentApiResponse<AstronautDto>>(resultContent, jsonSerializerOptions);
+  return response.Payload;
+}
+```
+
+> Yukarıdaki örnekte *System.Text.Json* namespace i kullanılmıştır. Üçüncü parti (Newtonsoft.Json vs) kütüphaneleri de kullanabilirsiniz.
+
+> Dilerseniz ***ARConsistency.Abstractions*** kütüphanesini kullanmadan yanıt modelini projenizde kendiniz oluşturarak dönen yanıtları deserialize edebilirsiniz.
+
 ## Test Projesi Dökümantasyonu
 
 Repository içersinde projeyi test edebileceğiniz bir .Net Core Web Api projesi bulunmaktadır. 

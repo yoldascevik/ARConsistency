@@ -163,6 +163,43 @@ While this setting is on, errors occurring in the pipeline are transmitted to th
 
 When logging is turned off, error messages captured are thrown without processing.
 
+## Client-Side Usage
+
+If you are sending a request from your .Net project to an API that uses ARConsistency, you need to deserialize the incoming serialized response with the ARConsistency base response model.
+You don't need to reference the ARConsistency package to your client project for this. Instead, you can use the ***ARConsistency.Abstractions*** library, which is lighter and contains only the basic base response model.
+
+Responses returned by ARConsistency are serialized with generic *ConsistentApiResponse<T>* class.
+
+##### 1. Install Package From NuGet
+
+```powershell
+PM> Install-Package ARConsistency.Abstractions
+```
+
+##### 2. Deserialize The Consistent Response
+
+```csharp
+public async Task<AstronautDto> GetIdByAsync(int id)
+{
+  // other codes...
+
+  var responseHttpMessage = await HttpClient.GetAsync(urlPath);
+  string resultContent = await responseHttpMessage.Content.ReadAsStringAsync();
+
+  var jsonSerializerOptions = new JsonSerializerOptions()
+  {
+      PropertyNameCaseInsensitive = true // use if UseCamelCaseNaming option is true in the ARConsistency config.
+  };
+
+  var response = JsonSerializer.Deserialize<ConsistentApiResponse<AstronautDto>>(resultContent, jsonSerializerOptions);
+  return response.Payload;
+}
+```
+
+> In the above example, *System.Text.Json* namespace is used. You can also use third party (Newtonsoft.Json etc.) libraries.
+
+> If you wish, you can create your own response model in your project and deserialize the returned responses without using the ***ARConsistency.Abstractions*** library.
+
 ## Test Api Documentation
 
 There is a .Net Core Web Api project in the repository where you can test the project. 
