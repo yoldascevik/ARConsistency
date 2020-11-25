@@ -5,6 +5,7 @@ namespace ARConsistency.Helpers
     internal class ResponseMessage
     {
         internal const string Success = "Request successful.";
+        internal const string Created = "Entity created successful. Please see payload for more information.";
         internal const string NotFound = "Request not found. The specified uri or entity does not exist.";
         internal const string BadRequest = "Request invalid.";
         internal const string MethodNotAllowed = "Request responded with 'Method Not Allowed'.";
@@ -18,6 +19,7 @@ namespace ARConsistency.Helpers
             statusCode switch
             {
                 StatusCodes.Status200OK => ResponseMessage.Success,
+                StatusCodes.Status201Created => ResponseMessage.Created,
                 StatusCodes.Status204NoContent => ResponseMessage.NotContent,
                 StatusCodes.Status400BadRequest => ResponseMessage.BadRequest,
                 StatusCodes.Status401Unauthorized => ResponseMessage.UnAuthorized,
