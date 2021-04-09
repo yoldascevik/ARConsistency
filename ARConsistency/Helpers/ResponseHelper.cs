@@ -50,15 +50,12 @@ namespace ARConsistency.Helpers
             await context.Response.WriteAsync(jsonString);
         }
 
-        internal bool IsConsistentlyResponse(HttpResponse response)
+        internal bool IsConsistentlyResponse(string body, string contentType)
         {
-            if (!response.ContentLength.HasValue || response.ContentLength == 0)
+            if (string.IsNullOrEmpty(body) || string.IsNullOrEmpty(contentType))
                 return true;
             
-            if (string.IsNullOrEmpty(response.ContentType))
-                return true;
-
-            return response.ContentType.Split(";").Intersect(ConsistentlyContentTypes).Any();
+            return contentType.Split(";").Intersect(ConsistentlyContentTypes).Any();
         }
     }
 }
