@@ -39,6 +39,13 @@ namespace TestApi.Controllers
             return Ok(Get().FirstOrDefault(x=> x.Summary == summary));
         }
         
+        [HttpGet]
+        [Route("HtmlPage")]
+        public ContentResult HtmlPage() 
+        {
+            return base.Content("<div>ARConsistency Html Test Page!</div>", "text/html");
+        }
+
         #region ApiResponseResults
         [HttpGet]
         [Route("ApiResponseStringResult")]

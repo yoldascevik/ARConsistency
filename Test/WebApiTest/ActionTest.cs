@@ -60,5 +60,23 @@ namespace WebApiTest
             Assert.False(consistentApiResponse.IsError);
             Assert.Null(consistentApiResponse.Payload);
         }
+        
+        [Fact]
+        public async void GetHtmlPage_ShouldNotBeConsistentResponse()
+        {
+            // Arrange
+            string expectedContentType = "text/html";
+            string expectedBodyString = "<div>ARConsistency Html Test Page!</div>";
+            
+            // Act
+            var response = await _client.GetAsync("/api/WeatherForecast/HtmlPage");
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var responseContentType = response.Content.Headers.ContentType.MediaType;
+            
+            // Assert
+            Assert.Equal(expectedBodyString, responseBody);
+            Assert.Equal(expectedContentType, responseContentType);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
     }
 }
