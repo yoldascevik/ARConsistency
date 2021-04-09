@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ARConsistency.Abstractions;
@@ -47,6 +48,17 @@ namespace ARConsistency.Helpers
             context.Response.ContentLength = jsonString != null ? Encoding.UTF8.GetByteCount(jsonString) : 0;
 
             await context.Response.WriteAsync(jsonString);
+        }
+
+        internal bool IsConsistentlyResponse(HttpResponse response)
+        {
+            if (!response.ContentLength.HasValue || response.ContentLength == 0)
+                return true;
+            
+            if (string.IsNullOrEmpty(response.ContentType))
+                return true;
+
+            return response.ContentType.Split(";").Intersect(ConsistentlyContentTypes).Any();
         }
     }
 }
