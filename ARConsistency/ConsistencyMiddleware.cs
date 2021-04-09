@@ -37,16 +37,16 @@ namespace ARConsistency
         public async Task InvokeAsync(HttpContext context)
         {
             Stream originalResponseBodyStream = context.Response.Body;
-            await using MemoryStream memoryStream = new MemoryStream();
+            await using MemoryStream responseBodyStream = new MemoryStream();
             {
-                context.Response.Body = memoryStream;
+                context.Response.Body = responseBodyStream;
 
                 try
                 {
                     await _next.Invoke(context);
 
                     context.Response.Body = originalResponseBodyStream;
-                    await HandleRequestAsync(context, await _responseHelper.ReadResponseBodyStreamAsync(memoryStream));
+                    await HandleRequestAsync(context, await _responseHelper.ReadResponseBodyStreamAsync(responseBodyStream));
                 }
                 catch (ApiException apiException)
                 {
@@ -70,7 +70,7 @@ namespace ARConsistency
 
         private async Task HandleRequestAsync(HttpContext context, string body)
         {
-            if (!_responseHelper.IsConsistentlyResponse(context.Response))
+            if (!_responseHelper.IsConsistentlyResponse(body, context.Response.ContentType))
             {
                 await context.Response.WriteAsync(body);
                 return;
