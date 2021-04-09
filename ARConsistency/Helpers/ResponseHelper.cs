@@ -9,6 +9,12 @@ namespace ARConsistency.Helpers
 {
     internal class ResponseHelper
     {
+        internal readonly string[] ConsistentlyContentTypes = new[]
+        {
+            "application/json",
+            "application/xml"
+        };
+        
         private readonly ResponseOptions _options;
         public ResponseHelper(ResponseOptions options)
         {

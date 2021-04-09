@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using ARConsistency.Abstractions;
 using ARConsistency.Configuration;
@@ -36,6 +37,12 @@ namespace ARConsistency
 
         public async Task InvokeAsync(HttpContext context)
         {
+            if (!_responseHelper.ConsistentlyContentTypes.Contains(context.Response.ContentType))
+            {
+                await _next.Invoke(context);
+                return;
+            }
+            
             Stream originalResponseBodyStream = context.Response.Body;
             await using MemoryStream memoryStream = new MemoryStream();
             {
